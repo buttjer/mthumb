@@ -1,6 +1,6 @@
 {
   "name": "buttjer/mthumb",
-  "description": "mthumb - A secure TimThumb alternative for easily resizing images."
+  "description": "mthumb - A secure TimThumb alternative for easily resizing images",
    "autoload": {
         "files": ["mthumb.php"]
     }
