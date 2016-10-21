@@ -44,6 +44,8 @@ License URI: LICENSE
  * every time you download a new version.
 */
 
+namespace Buttjer;
+
 /**
  * Version of this script *
  */
@@ -73,7 +75,7 @@ if (!defined('DISPLAY_ERROR_MESSAGES')) {
     /**
      * Display error messages. Set to false to turn off errors (good for production websites)
      */
-    define('DISPLAY_ERROR_MESSAGES', false);
+    define('DISPLAY_ERROR_MESSAGES', true);
 }
 
 if (!defined('ALLOW_EXTERNAL')) {
@@ -1746,5 +1748,3 @@ if (!class_exists('mthumb')) : /**
     }
 }
 endif;
-
-mthumb::start();
