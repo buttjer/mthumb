@@ -51,240 +51,6 @@ namespace Buttjer;
  */
 define('VERSION', '3.0.1');
 
-//Load a config file if it exists. Otherwise, use the values below
-if (file_exists(dirname(__FILE__) . '/mthumb-config.php')) {
-    require_once('mthumb-config.php');
-}
-
-if (!defined('DEBUG_ON')) {
-    /**
-     * Enable debug logging to web server error log (STDERR)
-     */
-    define('DEBUG_ON', false);
-}
-
-if (!defined('DEBUG_LEVEL')) {
-    /**
-     * Debug level 1 is less noisy and 3 is the most noisy
-     *
-     */
-    define('DEBUG_LEVEL', 1);
-}
-
-if (!defined('DISPLAY_ERROR_MESSAGES')) {
-    /**
-     * Display error messages. Set to false to turn off errors (good for production websites)
-     */
-    define('DISPLAY_ERROR_MESSAGES', true);
-}
-
-if (!defined('ALLOW_EXTERNAL')) {
-    /**
-     *  Allow image fetching from external websites. Will check against ALLOWED_SITES always.     *
-     */
-    define('ALLOW_EXTERNAL', false);
-}
-
-if (!isset($ALLOWED_SITES)) {
-    /**
-     *  If ALLOW_EXTERNAL is true then external images will only be fetched from these domains and their subdomains.
-     */
-    $ALLOWED_SITES = array(
-        'flickr.com',
-        'staticflickr.com',
-        'img.youtube.com',
-        'upload.wikimedia.org',
-        'imgur.com',
-        'imageshack.us',
-        'tinypic.com',
-    );
-}
-
-if (!defined('FILE_CACHE_ENABLED')) {
-    /**
-     * Should we store resized/modified images on disk to speed things up?
-     */
-    define('FILE_CACHE_ENABLED', true);
-}
-
-if (!defined('DAY_IN_SECONDS')) {
-    define('DAY_IN_SECONDS', 24 * 60 * 60);
-}
-
-if (!defined('FILE_CACHE_TIME_BETWEEN_CLEANS')) {
-    /**
-     * How often the cache is cleaned
-     */
-    define('FILE_CACHE_TIME_BETWEEN_CLEANS', DAY_IN_SECONDS * 30);
-}
-
-if (!defined('FILE_CACHE_MAX_FILE_AGE')) {
-    /**
-     *  How old does a file have to be to be deleted from the cache
-     */
-    define('FILE_CACHE_MAX_FILE_AGE', DAY_IN_SECONDS * 60);
-}
-
-if (!defined('FILE_CACHE_SUFFIX')) {
-    /**
-     * What to put at the end of all files in the cache directory so we can identify them
-     */
-    define('FILE_CACHE_SUFFIX', '.txt');
-}
-
-if (!defined('FILE_CACHE_PREFIX')) {
-    /**
-     * What to put at the beg of all files in the cache directory so we can identify them
-     */
-    define('FILE_CACHE_PREFIX', 'mthumb');
-}
-
-if (!defined('FILE_CACHE_DIRECTORY')) {
-    /**
-     * Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
-     *
-     */
-    //define ('FILE_CACHE_DIRECTORY', './cache');
-    define('FILE_CACHE_DIRECTORY', false); // @todo test on more deployments
-}
-
-if (!defined('TEN_MB_IN_BTYES')) {
-    define('TEN_MB_IN_BTYES', 10485760);
-}
-//
-if (!defined('MAX_FILE_SIZE')) {
-    /**
-     * This is the max internal or external file size that we'll process.
-     */
-    define('MAX_FILE_SIZE', TEN_MB_IN_BTYES * 2);
-}
-
-if (!defined('CURL_TIMEOUT')) {
-    /**
-     * Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
-     *
-     */
-    define('CURL_TIMEOUT', 20);
-}
-
-if (!defined('WAIT_BETWEEN_FETCH_ERRORS')) {
-    /**
-     * Time to wait between errors fetching remote file
-     */
-    define('WAIT_BETWEEN_FETCH_ERRORS', 3600);
-}
-
-if (!defined('BROWSER_CACHE_MAX_AGE')) {
-    /**
-     * Time to cache in the browser
-     *
-     */
-    define('BROWSER_CACHE_MAX_AGE', DAY_IN_SECONDS * 30);
-}
-
-if (!defined('BROWSER_CACHE_DISABLE')) {
-    /**
-     *  Use for testing if you want to disable all browser caching
-     */
-    define('BROWSER_CACHE_DISABLE', false);
-}
-
-if (!defined('MAX_WIDTH')) {
-    define('MAX_WIDTH', 3200);
-}
-if (!defined('MAX_HEIGHT')) {
-    define('MAX_HEIGHT', 3200);
-}
-
-if (!defined('PNG_IS_TRANSPARENT')) {
-    /**
-     * Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour
-     *
-     */
-    define('PNG_IS_TRANSPARENT', true);
-}
-
-if (!defined('DEFAULT_Q')) {
-    /**
-     * Default image quality. Allows override in mthumb-config.php
-     *
-     */
-    define('DEFAULT_Q', 85);
-}
-
-if (!defined('DEFAULT_ZC')) {
-    /**
-     * Default zoom/crop setting. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_ZC', 1);
-}
-
-if (!defined('DEFAULT_F')) {
-    /**
-     * Default image filters. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_F', '');
-}
-
-//
-if (!defined('DEFAULT_S')) {
-    /**
-     * Default sharpen value. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_S', 0);
-}
-
-if (!defined('DEFAULT_CC')) {
-    /**
-     * Default canvas colour. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_CC', 'ffffff');
-}
-
-if (!defined('DEFAULT_WIDTH')) {
-    /**
-     * Default thumbnail width. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_WIDTH', 125);
-}
-
-if (!defined('DEFAULT_HEIGHT')) {
-    /**
-     * Default thumbnail height. Allows override in mthumb-config.php
-     */
-    define('DEFAULT_HEIGHT', 125);
-}
-
-/**
- * Additional Parameters:
- * LOCAL_FILE_BASE_DIRECTORY = Override the DOCUMENT_ROOT. This is best used in mthumb-config.php
- */
-
-if (!defined('OPTIPNG_ENABLED')) {
-    /**
-     * Image compression is enabled if either of these point to valid paths. They only work for PNGs. GIFs and JPEGs are not affected.
-     */
-    define('OPTIPNG_ENABLED', true);
-}
-
-if (!defined('OPTIPNG_PATH')) {
-    /**
-     * This will run first because it gives better compression than pngcrush.
-     *
-     */
-    define('OPTIPNG_PATH', '/usr/bin/optipng');
-}
-
-if (!defined('PNGCRUSH_ENABLED')) {
-    define('PNGCRUSH_ENABLED', true);
-}
-
-if (!defined('PNGCRUSH_PATH')) {
-    /**
-     * This will only run if OPTIPNG_PATH is not set or is not valid
-     */
-    define('PNGCRUSH_PATH', '/usr/bin/pngcrush');
-}
 
 // -------------- STOP EDITING CONFIGURATION HERE --------------
 
@@ -410,6 +176,242 @@ if (!class_exists('mthumb')) : /**
          */
         public function __construct()
         {
+
+            //Load a config file if it exists. Otherwise, use the values below
+            if (file_exists(dirname(__FILE__) . '/mthumb-config.php')) {
+                require_once('mthumb-config.php');
+            }
+
+            if (!defined('DEBUG_ON')) {
+                /**
+                 * Enable debug logging to web server error log (STDERR)
+                 */
+                define('DEBUG_ON', false);
+            }
+
+            if (!defined('DEBUG_LEVEL')) {
+                /**
+                 * Debug level 1 is less noisy and 3 is the most noisy
+                 *
+                 */
+                define('DEBUG_LEVEL', 1);
+            }
+
+            if (!defined('DISPLAY_ERROR_MESSAGES')) {
+                /**
+                 * Display error messages. Set to false to turn off errors (good for production websites)
+                 */
+                define('DISPLAY_ERROR_MESSAGES', true);
+            }
+
+            if (!defined('ALLOW_EXTERNAL')) {
+                /**
+                 *  Allow image fetching from external websites. Will check against ALLOWED_SITES always.     *
+                 */
+                define('ALLOW_EXTERNAL', false);
+            }
+
+            if (!isset($ALLOWED_SITES)) {
+                /**
+                 *  If ALLOW_EXTERNAL is true then external images will only be fetched from these domains and their subdomains.
+                 */
+                $ALLOWED_SITES = array(
+                    'flickr.com',
+                    'staticflickr.com',
+                    'img.youtube.com',
+                    'upload.wikimedia.org',
+                    'imgur.com',
+                    'imageshack.us',
+                    'tinypic.com',
+                );
+            }
+
+            if (!defined('FILE_CACHE_ENABLED')) {
+                /**
+                 * Should we store resized/modified images on disk to speed things up?
+                 */
+                define('FILE_CACHE_ENABLED', true);
+            }
+
+            if (!defined('DAY_IN_SECONDS')) {
+                define('DAY_IN_SECONDS', 24 * 60 * 60);
+            }
+
+            if (!defined('FILE_CACHE_TIME_BETWEEN_CLEANS')) {
+                /**
+                 * How often the cache is cleaned
+                 */
+                define('FILE_CACHE_TIME_BETWEEN_CLEANS', DAY_IN_SECONDS * 30);
+            }
+
+            if (!defined('FILE_CACHE_MAX_FILE_AGE')) {
+                /**
+                 *  How old does a file have to be to be deleted from the cache
+                 */
+                define('FILE_CACHE_MAX_FILE_AGE', DAY_IN_SECONDS * 60);
+            }
+
+            if (!defined('FILE_CACHE_SUFFIX')) {
+                /**
+                 * What to put at the end of all files in the cache directory so we can identify them
+                 */
+                define('FILE_CACHE_SUFFIX', '.txt');
+            }
+
+            if (!defined('FILE_CACHE_PREFIX')) {
+                /**
+                 * What to put at the beg of all files in the cache directory so we can identify them
+                 */
+                define('FILE_CACHE_PREFIX', 'mthumb');
+            }
+
+            if (!defined('FILE_CACHE_DIRECTORY')) {
+                /**
+                 * Directory where images are cached. Left blank it will use the system temporary directory (which is better for security)
+                 *
+                 */
+                //define ('FILE_CACHE_DIRECTORY', './cache');
+                define('FILE_CACHE_DIRECTORY', false); // @todo test on more deployments
+            }
+
+            if (!defined('TEN_MB_IN_BTYES')) {
+                define('TEN_MB_IN_BTYES', 10485760);
+            }
+            //
+            if (!defined('MAX_FILE_SIZE')) {
+                /**
+                 * This is the max internal or external file size that we'll process.
+                 */
+                define('MAX_FILE_SIZE', TEN_MB_IN_BTYES * 2);
+            }
+
+            if (!defined('CURL_TIMEOUT')) {
+                /**
+                 * Timeout duration for Curl. This only applies if you have Curl installed and aren't using PHP's default URL fetching mechanism.
+                 *
+                 */
+                define('CURL_TIMEOUT', 20);
+            }
+
+            if (!defined('WAIT_BETWEEN_FETCH_ERRORS')) {
+                /**
+                 * Time to wait between errors fetching remote file
+                 */
+                define('WAIT_BETWEEN_FETCH_ERRORS', 3600);
+            }
+
+            if (!defined('BROWSER_CACHE_MAX_AGE')) {
+                /**
+                 * Time to cache in the browser
+                 *
+                 */
+                define('BROWSER_CACHE_MAX_AGE', DAY_IN_SECONDS * 30);
+            }
+
+            if (!defined('BROWSER_CACHE_DISABLE')) {
+                /**
+                 *  Use for testing if you want to disable all browser caching
+                 */
+                define('BROWSER_CACHE_DISABLE', false);
+            }
+
+            if (!defined('MAX_WIDTH')) {
+                define('MAX_WIDTH', 3200);
+            }
+            if (!defined('MAX_HEIGHT')) {
+                define('MAX_HEIGHT', 3200);
+            }
+
+            if (!defined('PNG_IS_TRANSPARENT')) {
+                /**
+                 * Define if a png image should have a transparent background color. Use False value if you want to display a custom coloured canvas_colour
+                 *
+                 */
+                define('PNG_IS_TRANSPARENT', true);
+            }
+
+            if (!defined('DEFAULT_Q')) {
+                /**
+                 * Default image quality. Allows override in mthumb-config.php
+                 *
+                 */
+                define('DEFAULT_Q', 85);
+            }
+
+            if (!defined('DEFAULT_ZC')) {
+                /**
+                 * Default zoom/crop setting. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_ZC', 1);
+            }
+
+            if (!defined('DEFAULT_F')) {
+                /**
+                 * Default image filters. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_F', '');
+            }
+
+            //
+            if (!defined('DEFAULT_S')) {
+                /**
+                 * Default sharpen value. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_S', 0);
+            }
+
+            if (!defined('DEFAULT_CC')) {
+                /**
+                 * Default canvas colour. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_CC', 'ffffff');
+            }
+
+            if (!defined('DEFAULT_WIDTH')) {
+                /**
+                 * Default thumbnail width. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_WIDTH', 125);
+            }
+
+            if (!defined('DEFAULT_HEIGHT')) {
+                /**
+                 * Default thumbnail height. Allows override in mthumb-config.php
+                 */
+                define('DEFAULT_HEIGHT', 125);
+            }
+
+            /**
+             * Additional Parameters:
+             * LOCAL_FILE_BASE_DIRECTORY = Override the DOCUMENT_ROOT. This is best used in mthumb-config.php
+             */
+
+            if (!defined('OPTIPNG_ENABLED')) {
+                /**
+                 * Image compression is enabled if either of these point to valid paths. They only work for PNGs. GIFs and JPEGs are not affected.
+                 */
+                define('OPTIPNG_ENABLED', true);
+            }
+
+            if (!defined('OPTIPNG_PATH')) {
+                /**
+                 * This will run first because it gives better compression than pngcrush.
+                 *
+                 */
+                define('OPTIPNG_PATH', '/usr/bin/optipng');
+            }
+
+            if (!defined('PNGCRUSH_ENABLED')) {
+                define('PNGCRUSH_ENABLED', true);
+            }
+
+            if (!defined('PNGCRUSH_PATH')) {
+                /**
+                 * This will only run if OPTIPNG_PATH is not set or is not valid
+                 */
+                define('PNGCRUSH_PATH', '/usr/bin/pngcrush');
+            }
+
             global $ALLOWED_SITES;
             $this->startTime = microtime(true);
             date_default_timezone_set('UTC');
