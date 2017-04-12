@@ -1142,7 +1142,7 @@ if (!class_exists('mthumb')) : /**
             else {
                 if (preg_match('/^image\/png$/i', $mimeType)) {
                     $imgType = 'png';
-                    imagepng($canvas, $tempfile, floor($quality * 0.09));
+                    imagepng($canvas, $tempfile, 9);
                 }
                 else {
                     if (preg_match('/^image\/gif$/i', $mimeType)) {
